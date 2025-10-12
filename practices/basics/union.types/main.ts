@@ -130,21 +130,21 @@ const res2: Track2 | Artist2 = {
 
 type Input = number[] | string[] | { message: string };
 function processInput(input: Input) {
-  if(Array.isArray(input)){
-    if(typeof input[0] === "number"){
-      const sum = input.reduce((a, b) => a + b, 0)
-      console.log()
+  if (Array.isArray(input)) {
+    if (input.length === 0) {
+      throw new Error("Empty array!");
     }
-    else{
-      console.log(input.join(" "));
+    if (input.every((element) => typeof element === "number")) {
+      return input.reduce((sum, num) => sum + num, 0);
     }
+    if (input.every((element) => typeof element === "string")) {
+      return input.join("");
+    }
+
+    throw new Error("Invalid type of array!");
   }
-  else if (typeof input === "object" && "message" in input){
-      const res = input as {message: string}
-      console.log(res.message.toUpperCase()) ;
-  }
-  else{
-    throw new Error("Invalid Input") 
+  if ("message" in input) {
+    return input.message.toUpperCase();
   }
 }
 
@@ -153,3 +153,159 @@ console.log(processInput([1, 2, 3])); // 6
 console.log(processInput(["hello", "world"])); // "helloworld"
 console.log(processInput({ message: "TypeScript" })); // "TYPESCRIPT"
 //console.log(processInput(42)); // 에러 발생
+
+//===========================================================================================================================================================================================
+//Q2: Write code that satisfies the following conditions.
+/* Define the following two classes:
+   - Car class → has a property brand (brand name, string)
+   - Bike class → has a property type (bike type, string)
+
+   Write a function that takes a vehicle parameter, which can be an instance of either Car or Bike, and process it according to the following rules:
+   - If it’s a Car, return the brand name in uppercase.
+   - If it’s a Bike, return the bike type prefixed with "Bike: ". */
+
+class Car {
+  public brand: string;
+  constructor(brand: string) {
+    this.brand = brand;
+  }
+}
+
+class Bike {
+  public type: string;
+  constructor(type: string) {
+    this.type = type;
+  }
+}
+
+function processVehicle(vehicle: Car | Bike): string {
+  if (vehicle instanceof Car) {
+    return vehicle.brand.toUpperCase();
+  } else if (vehicle instanceof Bike) {
+    return `Bike: ${vehicle.type}`;
+  } else {
+    throw new Error("Invalid Type!");
+  }
+}
+
+// 테스트 코드
+const myCar = new Car("Tesla");
+const myBike = new Bike("Mountain");
+
+console.log(processVehicle(myCar)); // "TESLA"
+console.log(processVehicle(myBike)); // "Bike: Mountain"
+//console.log(processVehicle("unknown")); // 에러 발생
+
+//===========================================================================================================================================================================================
+//Q3: Using the in operator for user management
+/* The system has two types of users:
+   - Admin user: { type: "admin"; permissions: string[] }
+   - User user: { type: "user"; email: string }
+
+   Write a function called processUser that takes either an Admin or a User object as input and processes it as follows:
+   - If the input is an Admin, return a string that joins all permissions with commas.
+   - If the input is a User, return the email address. */
+
+type Admin = {
+  type: "admin";
+  permissions: string[];
+};
+
+type User = {
+  type: "user";
+  email: string;
+};
+
+function processUser(user: Admin | User): string {
+  if ("permissions" in user) {
+    return user.permissions.join();
+  } else if ("email" in user) {
+    return user.email;
+  } else {
+    throw new Error("Invalid type!");
+  }
+}
+
+// 테스트 코드
+console.log(processUser({ type: "admin", permissions: ["read", "write"] })); // "read,write"
+console.log(processUser({ type: "user", email: "user@example.com" })); // "user@example.com"
+//console.log(processUser({ type: "guest" })); // 에러 발생
+
+//===========================================================================================================================================================================================
+//Q4: Write a function that handles the following union types:
+/* - Rectangle object: { width: number; height: number }
+   - Circle object: { radius: number }
+
+   The function should operate according to the following rules:
+   - If the input is a Rectangle, return its area (width × height).
+   - If the input is a Circle, return its area (π × radius²). */
+
+type Rectangle = {
+  width: number;
+  height: number;
+};
+
+type Circle = {
+  radius: number;
+};
+
+// 사용자 정의 타입 가드
+function isRectangle(shape: unknown): shape is Rectangle {
+  return (
+    (shape as Rectangle).width !== undefined &&
+    (shape as Rectangle).height !== undefined
+  );
+}
+
+function calculateArea4(shape: Rectangle | Circle): number {
+  if (isRectangle(shape)) {
+    return shape.width * shape.height;
+  } else {
+    return Math.PI * shape.radius ** 2;
+  }
+}
+
+// 테스트 코드
+console.log(calculateArea4({ width: 10, height: 5 })); // 50
+console.log(calculateArea4({ radius: 7 })); // 153.93804002589985 (대략 π * 7²)
+
+//===========================================================================================================================================================================================
+//Q5: Union Type Pitfalls and Solutions
+/* There are two union types handled by a function:
+   - Square: { type: "square"; side: number }
+   - Circle: { type: "circle"; radius: number }
+
+   A function called calculateArea is meant to calculate the area for both types.
+   However, if the union types are not handled properly, there’s a possibility of runtime errors.
+
+   Write a solution that resolves this issue.
+   - Use a discriminated union (with a type property) to safely narrow the types.
+   - Add an exhaustiveness check so that even if new types are added in the future, type safety is maintained. */
+
+type Square5 = {
+  type: "square";
+  side: number;
+};
+
+type Circle5 = {
+  type: "circle";
+  radius: number;
+};
+
+type Shape = Square5 | Circle5;
+
+function calculateArea5(shape: Shape): number {
+  switch (shape.type) {
+    case "square":
+      return shape.side ** 2;
+    case "circle":
+      return Math.PI * shape.radius ** 2;
+    default:
+      const _exhaustive: never = shape;
+      throw new Error(`Unhandled shape type: ${_exhaustive}`);
+  }
+}
+
+// 테스트 코드
+console.log(calculateArea5({ type: "square", side: 5 })); // 기대 출력: 25
+console.log(calculateArea5({ type: "circle", radius: 7 })); // 기대 출력: 153.93804002589985
