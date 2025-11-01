@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "es6",            // version of compiled Javascript
+    "module": "ESNext",         // module system
+    "strict": true,             // strict type checking
+    "esModuleInterop": true,
+    "skipLibCheck": true,       // type checking of external libraries
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
+    "outDir": "./dist",         // directory to save the produced Javascript files
+    "sourceMap": true,          // mapping of Javascript code and TypeScript code for debugging purpose
+  },
+  "include": ["main.ts"]        // files to be included during compilation
+
+}
