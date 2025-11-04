@@ -2,6 +2,7 @@ import { Box, styled, Typography } from "@mui/material";
 import React from "react";
 import { NavLink, Outlet } from "react-router";
 import HomeIcon from '@mui/icons-material/Home';
+import SearchIcon from '@mui/icons-material/Search';
 
 const Layout = styled("div")({
   display: "flex",
@@ -59,10 +60,17 @@ const AppLayout = () => {
           <NavList>
             <StyledNavLink to="/">
               <HomeIcon/> 
-              <Typography variant="h2" fontWeight={700}> Home</Typography>
+              <Typography variant="h2" fontWeight={700} sx={{ transform: "translateY(4px)" }}> Home</Typography>
             </StyledNavLink>
-            <StyledNavLink to="/search">Search</StyledNavLink>
+            <StyledNavLink to="/search">
+            <SearchIcon/>
+            <Typography variant="h2" fontWeight={700} sx={{ transform: "translateY(1px)" }}> Search</Typography>
+            </StyledNavLink>
           </NavList>
+        </ContentBox>
+
+        <ContentBox>
+          PlayList Header
         </ContentBox>
       </Sidebar>
       <Outlet />
