@@ -30,14 +30,14 @@ function App() {
     // <Suspense> defines a loading boundary. If anything inside that boundary is not ready yet
     // (e.g., a component loaded with React.lazy hasn’t finished downloading),
     // React will render the boundary’s fallback UI until it’s ready.
-    <Suspense fallback={<LoadingSpinner fullscreen/>}>
+    <Suspense fallback={<LoadingSpinner fullscreen />}>
       <Routes>
         <Route path="/" element={<AppLayout />}>
           <Route index element={<HomePage />} />
           <Route path="search" element={<SearchPage />} />
           <Route path="search/:keyword" element={<SearchWithKeywordPage />} />
           <Route path="playlist/:id" element={<PlaylistDetailPage />} />
-          {/* <Route path='/playlist' element={<LibraryPage/>}/> */}
+          {/* <Route path="/playlist" element={<LibraryPage />} /> */}
         </Route>
       </Routes>
     </Suspense>
