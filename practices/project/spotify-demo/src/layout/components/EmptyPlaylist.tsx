@@ -1,3 +1,4 @@
+import React from "react";
 import { Box, Button, styled, Typography } from "@mui/material";
 
 const ContentBox = styled(Box)(({ theme }) => ({

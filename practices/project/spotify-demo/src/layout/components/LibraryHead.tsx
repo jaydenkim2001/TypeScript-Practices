@@ -2,7 +2,6 @@ import { Box, Button, styled, Typography } from "@mui/material";
 import React from "react";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import AddIcon from "@mui/icons-material/Add";
-import EmptyPlaylist from "./EmptyPlaylist";
 
 const StyledAddIcon = styled(AddIcon)(({ theme }) => ({
   color: theme.palette.primary.main,
@@ -11,6 +10,11 @@ const StyledAddIcon = styled(AddIcon)(({ theme }) => ({
     color: theme.palette.text.primary,
   },
 }));
+
+const handleCreatePlaylist = () => {
+  //To be done
+  console.log("Clicked");
+};
 
 const LibraryHead = () => {
   return (
@@ -23,9 +27,8 @@ const LibraryHead = () => {
       >
         Your Playlist
       </Typography>
-      <StyledAddIcon />
+      <StyledAddIcon onClick={handleCreatePlaylist} />
     </Box>
-    
   );
 };
 

@@ -1,12 +1,10 @@
 import { Box, Button, styled, Typography } from "@mui/material";
 import React from "react";
 import { NavLink, Outlet } from "react-router";
-import HomeIcon from '@mui/icons-material/Home';
-import SearchIcon from '@mui/icons-material/Search';
-import BookmarkIcon from '@mui/icons-material/Bookmark';
-import AddIcon from '@mui/icons-material/Add';
-import EmptyPlaylist from "./components/EmptyPlaylist";
+import HomeIcon from "@mui/icons-material/Home";
+import SearchIcon from "@mui/icons-material/Search";
 import LibraryHead from "./components/LibraryHead";
+import Library from "./components/Library";
 
 const Layout = styled("div")({
   display: "flex",
@@ -37,14 +35,6 @@ const ContentBox = styled(Box)(({ theme }) => ({
   marginRight: "8px",
 }));
 
-const StyledAddIcon = styled(AddIcon)(({ theme }) => ({
-  color: theme.palette.primary.main,
-  marginLeft: "60px",
-  "&:hover": {
-    color: theme.palette.text.primary,
-  },
-}));
-
 const NavList = styled("ul")({
   listStyle: "none",
   padding: 0,
@@ -69,29 +59,41 @@ const AppLayout = () => {
   return (
     <Layout>
       <Sidebar>
-
         <ContentBox>
           <NavList>
             <StyledNavLink to="/">
-              <HomeIcon/> 
-              <Typography variant="h2" fontWeight={700} sx={{ transform: "translateY(4px)" }}> Home</Typography>
+              <HomeIcon />
+              <Typography
+                variant="h2"
+                fontWeight={700}
+                sx={{ transform: "translateY(4px)" }}
+              >
+                {" "}
+                Home
+              </Typography>
             </StyledNavLink>
             <StyledNavLink to="/search">
-              <SearchIcon/>
-              <Typography variant="h2" fontWeight={700} sx={{ transform: "translateY(1px)" }}> Search</Typography>
+              <SearchIcon />
+              <Typography
+                variant="h2"
+                fontWeight={700}
+                sx={{ transform: "translateY(1px)" }}
+              >
+                {" "}
+                Search
+              </Typography>
             </StyledNavLink>
           </NavList>
         </ContentBox>
 
         <ContentBox height={"100%"}>
           <NavList>
-            <StyledNavLink to ="/">
-              <LibraryHead/>
+            <StyledNavLink to="/">
+              <LibraryHead />
             </StyledNavLink>
           </NavList>
-          <EmptyPlaylist/>
+          <Library />
         </ContentBox>
-
       </Sidebar>
       <Outlet />
     </Layout>
