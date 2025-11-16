@@ -1,9 +1,15 @@
 import axios from "axios";
 import { clientID, clientSecret } from "../configs/authConfig";
-import { ClientCredentialTokenResponse } from "../models/auth";
+import { ClientCredentialTokenResponse } from "../typeSpecification/auth";
 
 const encodedBase64 = (data: string): string => {
-  return Buffer.from(data).toString("base64");
+  if(typeof window !== "undefined"){
+    // browser environment
+    return btoa(data);
+  } else {
+    //nodeJS environment
+    return Buffer.from(data).toString("base64");
+  }
 };
 
 export const getClientCredentialToken =
