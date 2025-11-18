@@ -14,6 +14,10 @@ const encodedBase64 = (data: string): string => {
 
 export const getClientCredentialToken =
   async (): Promise<ClientCredentialTokenResponse> => {
+
+    const tempClientID = "4af1a8408a064d739f86435e2172ca1f";
+    const tempClientSecret = "736fd451f2fb4ab7a9178e72881d601f";
+
     try {
       const body = new URLSearchParams({
         grant_type: "client_credentials",
@@ -24,7 +28,8 @@ export const getClientCredentialToken =
         {
           headers: {
             Authorization: `Basic ${encodedBase64(
-              clientID + ":" + clientSecret
+              //clientID + ":" + clientSecret
+              tempClientID + ":" + tempClientSecret
             )}`,
             "Content-Type": "application/x-www-form-urlencoded",
           },
