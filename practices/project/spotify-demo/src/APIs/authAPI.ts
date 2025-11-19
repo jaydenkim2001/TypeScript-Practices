@@ -28,8 +28,7 @@ export const getClientCredentialToken =
         {
           headers: {
             Authorization: `Basic ${encodedBase64(
-              //clientID + ":" + clientSecret
-              tempClientID + ":" + tempClientSecret
+              clientID + ":" + clientSecret
             )}`,
             "Content-Type": "application/x-www-form-urlencoded",
           },

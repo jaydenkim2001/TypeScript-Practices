@@ -1,1 +1,1 @@
-export const spotifyBaseURL = process.env.REACT_APP_SPOTIFY_BASE_URL as string;
+export const spotifyBaseURL = process.env.REACT_APP_SPOTIFY_BASE_URL;
