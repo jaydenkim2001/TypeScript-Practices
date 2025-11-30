@@ -27,12 +27,13 @@ const LibraryPage = React.lazy(
 // 5. (Mobile Version) Playlist Display Page    ('/playlist')
 
 function App() {
+
+  //Logging in using Spotify's authorisation code.
   const urlParams = new URLSearchParams(window.location.search);
   let code = urlParams.get("code");
   const codeVerifier = localStorage.getItem("code_verifier");
 
   const { mutate: exchangeToken } = useExchangeToken();
-
   useEffect(() => {
     if (code && codeVerifier) {
       exchangeToken({ code, codeVerifier });
